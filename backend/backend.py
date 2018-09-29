@@ -6,6 +6,8 @@ import cv2
 import pickle
 import requests
 
+from waitress import serve
+
 app = Flask(__name__)
 
 
@@ -23,3 +25,6 @@ def process():
 		# Work with openpose here
 
 		return "recieved"
+
+if __name__ == "__main__":
+	serve(app)
