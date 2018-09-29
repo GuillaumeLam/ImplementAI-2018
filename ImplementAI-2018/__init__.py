@@ -44,6 +44,7 @@ def record_status():
 		return jsonify(result="stopped")
 
 
+@app.route("/video_stream")
 def video_stream():
 	global video_camera
 	global global_frame
@@ -60,10 +61,10 @@ def video_stream():
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 		else:
 			yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
+				   b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
 
 
-@app.route('/video_viewer')
+@app.route("/video_viewer")
 def video_viewer():
 	return Response(video_stream(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')

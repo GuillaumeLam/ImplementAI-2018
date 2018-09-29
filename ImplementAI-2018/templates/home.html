@@ -79,9 +79,10 @@
                         <!-- Camera Recorder -->
                         <img id="video" src="{{ url_for('video_viewer') }}">
                         <div id="recorder">
-                            <button id="record">Record</button>
-                            <button id="stop">Stop</button>
-                            <script type="text/javascript" src="{{ url_for('static', filename='recorder.js') }}"></script>
+                            <button type="button" class="btn btn-success" id="record">Record</button>
+                            <button type="button" class="btn btn-danger" id="stop">Stop</button>
+                            <button type="button" class="btn btn-outline-primary" id="download">Download</button>
+                            <script type="text/javascript" src="{{ url_for('static', filename='js/recorder.js') }}"></script>
                         </div>
                         <!-- ./recorder -->
 
