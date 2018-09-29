@@ -8,6 +8,11 @@ import requests
 
 app = Flask(__name__)
 
+
+@app.route("/")
+def process():
+	return "Frontend"
+
 @app.route("/process", methods=['POST'])
 def process():
 	if (request.method =='POST'):
