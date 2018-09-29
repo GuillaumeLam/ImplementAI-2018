@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def process():
+def serve_frontend():
 	return "Frontend"
 
 @app.route("/process", methods=['POST'])
