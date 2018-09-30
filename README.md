@@ -5,7 +5,7 @@ Repo for ImplementAI project
 To run the frontend:
 * For Windows:
     * set FLASK_APP=ImplementAI-2018
-* For LInux:
+* For Linux:
     * export FLASK_APP=ImplementAI-2018
 * For both:
     * pip install -e .
