@@ -24,7 +24,7 @@ def process():
 
 		# Work with openpose here
 
-		return "recieved"
+		return "received"
 
 @app.route("/record_status", methods=["POST"])
 def record_status():

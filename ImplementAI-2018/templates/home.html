@@ -30,7 +30,7 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Exercise Coaching</a>
+            <a class="navbar-brand" href="#">Fitness Coaching</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -60,14 +60,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard</h1>
+                    <h1 class="page-header">Fitness Coaching</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
 
-            <div class="row">
-                <div class="col-lg-6 camera">
+            <div class="row" id="demo">
+                <div class="col-lg-7 camera">
                     <div class="card mb-3">
                         <h3 class="card-header">Camera</h3>
                         <div class="card-body">
@@ -78,29 +78,36 @@
 
                         <!-- Camera Recorder -->
                         <img id="video" src="{{ url_for('video_viewer') }}">
-                        <div id="recorder">
-                            <button type="button" class="btn btn-success" id="record">Record</button>
-                            <button type="button" class="btn btn-danger" id="stop">Stop</button>
-                            <button type="button" class="btn btn-outline-primary" id="download">Download</button>
+                        <div id="buttons">
+                            <button type="button" class="btn btn-success btn-lg" id="record"><i class="fas fa-circle"></i> Start</button>
+                            <button type="button" class="btn btn-danger btn-lg" id="stop"><i class="fas fa-stop"></i> Stop</button>
+                            <!--<button type="button" class="btn btn-primary btn-lg" id="evaluate"><i class="fas fa-check"></i> Evaluate</button>-->
+                            <a href="#" id="download" class="button btn btn-outline-primary btn-lg">Evaluate</a>
                             <script type="text/javascript" src="{{ url_for('static', filename='js/recorder.js') }}"></script>
                         </div>
                         <!-- ./recorder -->
 
-
                         <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">Your score: 89%</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
+                            <li class="list-group-item" style="font-weight: bold">Current Action</li>
+                            <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Squat</li>
+                            <li class="list-group-item" style="font-weight: bold">Angles</li>
+                            <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hip: 15&deg;</li>
+                            <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arm: 23&deg;</li>
+                            <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shoulder: 120&deg;</li>
+                            <li class="list-group-item" style="font-weight: bold">Tips</li>
+                            <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Straighten your back a bit more</li>
+                            <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arm angle needs to be 90&deg; when you're in the prone position</li>
+                            <li class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shoulder to elbow angle shouldn't be more than 40&deg;</li>
                         </ul>
                         <div class="card-body">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
+                            <a href="#" class="card-link">Email me the result</a>
+                            <a href="#" class="card-link">Share my result</a>
                         </div>
                         <div class="card-footer text-muted">
-                            2 days ago
+                            PoseAI @ ImplementAI 2018
                         </div>
                     </div>
                 </div>
