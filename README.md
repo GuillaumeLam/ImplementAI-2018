@@ -8,6 +8,6 @@ To run the frontend:
 * For LInux:
     * export FLASK_APP=ImplementAI-2018
 * For both:
-    * pip installhttp://127.0.0.1:5000 -e .
+    * pip install -e .
     * flask run
-    * access the frontend at
+    * access the frontend at http://127.0.0.1:5000
