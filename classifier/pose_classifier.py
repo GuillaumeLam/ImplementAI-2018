@@ -50,19 +50,24 @@ def main():
 
 	print("accuracy:" + str(accuracy) + " error rate:" + str(error_rate))
 
+	with open(r"pose_classifier.p", "wb") as output_file:
+		pickle.dump(clf, output_file)
+
 
 def load_data(X, Y):
 	files = os.listdir("./data")
 	# filecount = count(files)
 	for file in files:
 		norm, _ = pickle.load(open("./data/" + str(file), 'rb'))
-		X.append(norm.flatten('F'))
+		X.append(norm.flatten())
 		if re.match("squat*", file):
 			Y.append(0)
 		elif re.match("idle*", file):
 			Y.append(1)
 
 	return X, Y
+
+
 
 if __name__ == "__main__":
 	main()
