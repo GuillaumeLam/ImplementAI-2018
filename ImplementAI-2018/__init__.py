@@ -11,9 +11,11 @@ app = Flask(__name__)
 video_camera = None
 global_frame = None
 
+
 @app.route("/")
 def serve_frontend():
 	return render_template("home.html")
+
 
 @app.route("/process", methods=['POST'])
 def process():
@@ -25,6 +27,7 @@ def process():
 		# Work with openpose here
 
 		return "received"
+
 
 @app.route("/record_status", methods=["POST"])
 def record_status():
@@ -65,17 +68,23 @@ def video_stream():
 				   b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
 
 
+
 @app.route("/video_viewer")
 def video_viewer():
 	return Response(video_stream(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+
 @app.route("/improv_json", methods=["GET"])
 def improv_json():
 	temp = video_camera.current_info
 	# format some stuff
-	return jsonify(temp)
+	response = jsonify(temp)
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
+
+
 
 if __name__ == "__main__":
 	serve(app)

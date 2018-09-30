@@ -13,31 +13,45 @@ var url="http://127.0.0.1:5000/improv_json";
 //    }
 //}
 
-function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-}
-//Storing data:
-myObj = httpGet(url)
+//function httpGet(theUrl)
+//{
+//    var xmlHttp = new XMLHttpRequest();
+//    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+//    xmlHttp.send( null );
+//    return xmlHttp.responseText;
+//}
+////Storing data:
+//myObj = httpGet(url)
 
-//myObj = {
-//    pose: "squat",
-//    comment: {
-//        comment1: "back is off by x degrees",
-//        comment2: "blah blah blah",
-//        comment3: "blah blah blah blah blah"
-//    },
-//    tip: {
-//        tip1: "straighten back",
-//        tip2: "arm angle needs to be 90 degrees",
-//        tip3: "blah blah blah"
-//    }
-//};
+myObj = {
+    pose: "Squat",
+    comment: {
+        comment1: "Back is off by 10 degrees",
+        comment2: "Arm angle should be 180 degrees",
+        comment3: "Knees are too slanted at 30 degrees"
+    },
+    tip: {
+        tip1: "Straighten your back more",
+        tip2: "Arms need to be straight",
+        tip3: "Knees can't be more forward than your toes"
+    }
+};
 myJSON = JSON.stringify(myObj);
 localStorage.setItem("testJSON", myJSON);
+
+
+//(function worker() {
+//  $.ajax({
+//    url: 'http://127.0.0.1:5000/improv_json',
+//    success: function(data) {
+//      console.log(data);
+//    },
+//    complete: function() {
+//      setTimeout(worker, 1000);
+//    }
+//  });
+//})();
+
 
 //Retrieving data:
 text = localStorage.getItem("testJSON");
