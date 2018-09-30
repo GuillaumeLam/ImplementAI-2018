@@ -56,19 +56,13 @@ def load_data(X, Y):
 	# filecount = count(files)
 	for file in files:
 		norm, _ = pickle.load(open("./data/" + str(file), 'rb'))
-		X.append(flatten(norm))
+		X.append(norm.flatten('F'))
 		if re.match("squat*", file):
 			Y.append(0)
-		elif re.match("notsquat*", file):
+		elif re.match("idle*", file):
 			Y.append(1)
 
 	return X, Y
-
-
-def flatten(norm):
-	nx, ny = norm.shape
-	d = norm.reshape(nx*ny)
-	return d
 
 if __name__ == "__main__":
 	main()
