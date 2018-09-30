@@ -69,5 +69,12 @@ def video_viewer():
 	return Response(video_stream(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
+@app.route("/improv_json", methods=["GET"])
+def improv_json():
+	temp = video_camera.current_info
+	# format some stuff
+	return jsonify(temp)
+
 if __name__ == "__main__":
 	serve(app)
