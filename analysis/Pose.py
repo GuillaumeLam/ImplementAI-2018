@@ -38,6 +38,13 @@ class Pose:
         self.keypoints = keypoints
         if self.keypoints.shape != (25, 3):
             raise ValueError("Wrong size for keypoints. Expected (25, 3), got: [{}]".format(keypoints.shape))
+        self.confidence = keypoints[:,2]
+
+        x_mean = np.mean(keypoints[:,0][np.where(keypoints[:,2]>0.2)])
+        y_mean = np.mean(keypoints[:,1][np.where(keypoints[:,2]>0.2)])
+        self.keypoints[np.where(keypoints[:,2]<0.2)] = x_mean
+        self.keypoints[np.where(keypoints[:,2]<0.2)] = y_mean
+
         self.keypoints = keypoints[:, :2]
 
         # Map Keypoints so their co-ordinates can be accessed by their joint names.
@@ -52,6 +59,16 @@ class Pose:
 
         # Transform the cartesian co-ordinates to [0,1] in x and y.
         self.normalized_keypoints = self._get_normalized_keypoints()
+        self.normalized_keypoints_dict = self._get_keypoint_dict(self.normalized_keypoints)
+        self.mirrored_keypoints = self._get_mirrored_keypoints()
+
+        #from matplotlib import pyplot as plt
+        #x, y = self.normalized_keypoints.T
+
+        #print(self.normalized_keypoints)
+
+        #plt.scatter(x, y)
+        #plt.show()
 
     @staticmethod
     def _get_keypoint_dict(keypoints):
@@ -64,6 +81,23 @@ class Pose:
             keypoint_dict[key] = keypoints[i, :]
         return keypoint_dict
 
+    def _get_mirrored_keypoints(self):
+
+        mirrored_keypoint_dict = {}
+
+        for i,key in enumerate(index_to_joint_map.values()):
+            x,y = self.normalized_keypoints_dict[key]
+            delta = abs(x-0.5)
+            if(x<0.5):
+                mirrored_keypoint_dict[key] = x + 2*delta, y
+            elif(x>0.5):
+                mirrored_keypoint_dict[key] = x-2*delta,y
+            else:
+                mirrored_keypoint_dict[key] = x,y
+
+        return mirrored_keypoint_dict
+
+
     def _get_cartesian_keypoints(self):
         """
         Transforms the keypoints to the cartesian co-ordinates centered on the MidHip.
@@ -72,18 +106,18 @@ class Pose:
         midhip_x, midhip_y = self.keypoint_dict['MidHip']
 
         transformed_coords = np.zeros((25, 2), dtype=float)
-        print('===================================================')
-        print('Cartesian Transformation')
+        # print('===================================================')
+        # print('Cartesian Transformation')
         for i, joint_coord in enumerate(self.keypoints):
-            print(i)
-            print(index_to_joint_map[i], joint_coord)
+            # print(i)
+            # print(index_to_joint_map[i], joint_coord)
             joint_x, joint_y = joint_coord
             new_x, new_y = (joint_x - midhip_x), -1 * (joint_y - midhip_y)
 
             transformed_coords[i] = (new_x, new_y)
-            print(index_to_joint_map[i], transformed_coords[i])
-
-        print('===================================================')
+        #     print(index_to_joint_map[i], transformed_coords[i])
+        #
+        # print('===================================================')
         return transformed_coords
 
     def _get_cartesian_joint_angles(self):
@@ -151,6 +185,7 @@ class Pose:
         return theta_deg
 
     def _get_normalized_keypoints(self):
+
         normalized_keypoints = self.cartesian_keypoints.copy()
         normalized_keypoints[:, 0] -= min(normalized_keypoints[:, 0])
         normalized_keypoints[:, 0] /= (max(normalized_keypoints[:, 0]) - min(normalized_keypoints[:, 0]))

@@ -41,6 +41,7 @@ def record_status():
 		return jsonify(result="started")
 	else:
 		video_camera.stop_record()
+		status = 'false'
 		return jsonify(result="stopped")
 
 
