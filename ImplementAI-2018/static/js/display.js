@@ -40,26 +40,35 @@ myJSON = JSON.stringify(myObj);
 localStorage.setItem("testJSON", myJSON);
 
 
-//(function worker() {
-//  $.ajax({
-//    url: 'http://127.0.0.1:5000/improv_json',
-//    success: function(data) {
-//      console.log(data);
-//    },
-//    complete: function() {
-//      setTimeout(worker, 1000);
-//    }
-//  });
-//})();
-
-
-//Retrieving data:
-text = localStorage.getItem("testJSON");
-obj = JSON.parse(text);
-document.getElementById("pose").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.pose;
+(function worker() {
+  $.ajax({
+    url: 'http://127.0.0.1:5000/improv_json',
+    success: function(data) {
+      console.log(data);
+      obj = data;
+      document.getElementById("pose").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.pose;
 document.getElementById("comment1").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.comment.comment1;
 document.getElementById("comment2").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.comment.comment2;
 document.getElementById("comment3").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.comment.comment3;
 document.getElementById("tip1").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.tip.tip1;
 document.getElementById("tip2").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.tip.tip2;
 document.getElementById("tip3").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.tip.tip3;
+
+    },
+    complete: function() {
+      setTimeout(worker, 1000);
+    }
+  });
+})();
+
+
+//Retrieving data:
+//text = localStorage.getItem("testJSON");
+//obj = JSON.parse(text);
+//document.getElementById("pose").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.pose;
+//document.getElementById("comment1").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.comment.comment1;
+//document.getElementById("comment2").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.comment.comment2;
+//document.getElementById("comment3").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.comment.comment3;
+//document.getElementById("tip1").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.tip.tip1;
+//document.getElementById("tip2").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.tip.tip2;
+//document.getElementById("tip3").innerHTML = '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + obj.tip.tip3;

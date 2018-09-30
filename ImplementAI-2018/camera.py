@@ -68,6 +68,8 @@ class VideoCamera(object):
             ref_squat_keypoints, ref_squat_img = pickle.load(file_obj)
         self.ref_squat_pose = Pose(ref_squat_keypoints[0], ref_squat_img)
 
+        self.temp_info = {}
+
     def __del__(self):
         self.cap.release()
 
@@ -82,6 +84,7 @@ class VideoCamera(object):
             error += v
         print(error)
         self.plot_test.append(error)
+        self.temp_info['error'] = error
 
 
         if ret:

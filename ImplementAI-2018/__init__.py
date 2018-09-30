@@ -2,11 +2,14 @@ import cv2
 import numpy as np
 from flask import Flask, render_template, Response, jsonify, request
 from flask.json import jsonify
+from flask_cors import CORS, cross_origin
 from .camera import VideoCamera
 from waitress import serve
 
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 video_camera = None
 global_frame = None
@@ -77,11 +80,30 @@ def video_viewer():
 
 
 @app.route("/improv_json", methods=["GET"])
+@cross_origin()
 def improv_json():
-	temp = video_camera.current_info
+	# temp = video_camera.current_info
 	# format some stuff
+	temp = {"foo": "bar"}
+
+	temp = {
+    "pose": "Squat",
+    "comment": {
+        "comment1": "Back is off by 10 degrees",
+        "comment2": "Arm angle should be 180 degrees",
+        "comment3": "Knees are too slanted at 30 degrees"
+    },
+    "tip": {
+        "tip1": "Straighten your back more",
+        "tip2": "Arms need to be straight",
+        "tip3": "Knees can't be more forward than your toes"
+    }
+}
+
+	if video_camera and video_camera.temp_info.get('error'):
+		temp["pose"] = "Squat Error [{}]".format(video_camera.temp_info['error'])
 	response = jsonify(temp)
-	response.headers.add('Access-Control-Allow-Origin', '*')
+	# response.headers.add('Access-Control-Allow-Origin', '*')
 	return response
 
 
