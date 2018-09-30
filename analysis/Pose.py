@@ -49,8 +49,9 @@ class Pose:
 
         # Compute the inner angles between significant joints.
         self.cartesian_joint_angles = self._get_cartesian_joint_angles()
-        self.errors = get_pose_keypoint_errors(self, self)
-        pass
+
+        # Transform the cartesian co-ordinates to [0,1] in x and y.
+        self.normalized_keypoints = self._get_normalized_keypoints()
 
     @staticmethod
     def _get_keypoint_dict(keypoints):
@@ -148,6 +149,34 @@ class Pose:
         theta_deg = np.rad2deg(theta)
 
         return theta_deg
+
+    def _get_normalized_keypoints(self):
+        normalized_keypoints = self.cartesian_keypoints.copy()
+        normalized_keypoints[:, 0] -= min(normalized_keypoints[:, 0])
+        normalized_keypoints[:, 0] /= (max(normalized_keypoints[:, 0]) - min(normalized_keypoints[:, 0]))
+
+        normalized_keypoints[:, 1] -= min(normalized_keypoints[:, 1])
+        normalized_keypoints[:, 1] /= (max(normalized_keypoints[:, 1]) - min(normalized_keypoints[:, 1]))
+
+        return normalized_keypoints
+
+        # Debug Stuff
+        # from matplotlib import pyplot as plt
+        # x, y = normalized_keypoints.T
+        # plt.scatter(x, y)
+        # plt.show()
+
+        # box_width = max(self.cartesian_keypoints[:, 0]) - min(self.cartesian_keypoints[:, 0])
+        # box_height = max(self.cartesian_keypoints[:, 1]) - min(self.cartesian_keypoints[:, 1])
+
+        # tlx, tly = int(min(self.keypoints[:, 0])), int(min(self.keypoints[:, 1]) + box_height)
+        # brx, bry = int(min(self.keypoints[:, 0]) + box_width), int(min(self.keypoints[:, 1]))
+        #
+        # import cv2
+        # cv2.rectangle(self.image, (tlx, tly), (brx, bry), (255, 0, 0), 2)
+        # cv2.imshow('', self.image)
+        # cv2.waitKey()
+        # pass
 
 
 def get_pose_keypoint_errors(pose1, pose2, error_func=lambda x: x**2):
